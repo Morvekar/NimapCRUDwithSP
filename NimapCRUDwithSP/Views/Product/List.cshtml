@@ -1,0 +1,61 @@
+﻿@model IPagedList<NimapCRUDwithSP.Models.ProductModel>
+
+@*@{  IEnumerable
+        ViewBag.Title = "List";
+    }*@
+
+@using PagedList;
+@using PagedList.Mvc;
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ProductName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.First().CategoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CategoryName)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { CategoryID = item.CategoryID }) |
+
+                @Html.ActionLink("Delete", "Delete", new { CategoryID = item.CategoryID }, new { onclick = "return confirm('Are You Sure You Want to Delete these Details??');" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, i => Url.Action("List", "Product", new { i, search = Request.QueryString["search"] }))

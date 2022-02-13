@@ -1,0 +1,80 @@
+Create Database NimapCRUD
+
+use NimapCRUD
+
+create table Category
+(
+	CategoryID int primary key Identity,
+	CategoryName nvarchar(50),
+)
+
+insert into Category values (1, 'COne' )
+insert into Category values (2, 'CTwo' )
+insert into Category values (3, 'CThree' )
+insert into Category values (4, 'CFour' )
+insert into Category values (5, 'CFive' )
+
+
+create table Product
+(
+	ProductID int primary key,
+	ProductName nvarchar(50),
+	CategoryID int foreign key references Category(CategoryID) 
+)
+
+insert into Product values (111, 'POne' ,1 )
+insert into Product values (222, 'PTwo' , 2)
+insert into Product values (333, 'PThree', 3)
+insert into Product values (444, 'PFour' , 4)
+insert into Product values (555, 'PFive' , 5)
+
+select * from Category
+select * from Product
+
+create proc sp_select
+as
+begin
+	select Category.CategoryID, Category.CategoryName, Product.ProductID, Product.ProductName 
+	from Category inner join Product on Category.CategoryID = Product.CategoryID
+end
+
+create proc sp_update
+@ProductID int,
+@ProductName varchar(50),
+@CategoryID int,
+@CategoryName varchar(50)
+as
+begin
+
+	update Product set ProductID= @ProductID, ProductName= @ProductName from Product where CategoryID = @CategoryID
+	update Category set  CategoryName= @CategoryName from Category where CategoryID = @CategoryID
+
+end
+
+create proc sp_delete
+@ProductID int,
+@ProductName varchar(50),
+@CategoryID int,
+@CategoryName varchar(50)
+as
+begin
+
+	DELETE Product FROM Product INNER JOIN
+    Category ON Category.CategoryID = Product.CategoryID 
+	WHERE
+    Category.CategoryID = @CategoryID
+
+end
+
+create proc sp_insert
+@ProductID int,
+@ProductName varchar(50),
+@CategoryName varchar(50)
+as
+begin
+
+	insert into Product (ProductID,ProductName) values (@ProductID,@ProductName) 
+	insert into Product(CategoryID) select CategoryID from Product
+	insert into Category (CategoryName) values (@CategoryName)
+
+end

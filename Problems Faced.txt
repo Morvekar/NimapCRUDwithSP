@@ -1,0 +1,16 @@
+Created a MVC .Net project using Stored Procedures
+
+
+Created four stored procedures for Insert, Update, Delete and Display queries
+
+Used Inner Join to joined two tables in the sql queries where ever required
+
+Only Views are created manually rest i have written the codes and not used Scafolding
+
+Update, Delete, Display are working perfectly fine and also i have added the pagination.
+For pagination I have installed two packegs related to pagination 
+and added the pagelist tag in the List.html file
+
+Issue: When inserting the data the CustomerID is not retrived by the Stored Procedure
+	I tried solving it and can do it if i continue to find the issue till then
+	I have submitted the latest file
